@@ -27,10 +27,10 @@ public class RestUtenteApplicationTest {
     void restTemp() {
 
         RestTemplate restTemplate = new RestTemplate(); // abbiamo richiamato l'istanza dell'oggetto RestTemplate
-        String fooResourceUrl =
+        String fooeResourceUrl =
                 "https://65bb5fb252189914b5bbe4cf.mockapi.io/api/v1/users";
         ResponseEntity<String> response =
-                restTemplate.getForEntity(fooResourceUrl + "/1", String.class);
+                restTemplate.getForEntity(fooeResourceUrl + "/1", String.class);
         Assertions.assertEquals(response.getStatusCode(), HttpStatus.OK);
 
     }
