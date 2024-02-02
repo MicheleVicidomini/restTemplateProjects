@@ -9,9 +9,39 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 import utente.Utente;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+
 
 public class RestUtenteApplicationTest {
 
+    @BeforeAll
+    static void connessione() throws IOException {
+        String indirizzoURL =  "https://65bb5fb252189914b5bbe4cf.mockapi.io/api/v1/users";
+        URL url = null;
+        try {
+            url = new URL(indirizzoURL);
+        }
+        catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+        URLConnection connection = null;
+        try {
+            connection = url.openConnection();
+            connection.connect();
+        }
+        catch (IOException e){
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @Test
+    void RightConnection(){
+        Assertions.assertThrows(IOException.class, ()->connessione());
+    }
     @Test
     void config() {
         RestTemplate restTemplate = new RestTemplate(); // abbiamo richiamato l'istanza dell'oggetto RestTemplate
