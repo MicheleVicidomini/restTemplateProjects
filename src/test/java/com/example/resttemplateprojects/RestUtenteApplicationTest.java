@@ -17,7 +17,7 @@ public class RestUtenteApplicationTest {
 
         RestTemplate restTemplate = new RestTemplate(); // abbiamo richiamato l'istanza dell'oggetto RestTemplate
         String fooResourceUrl =
-                "httpsdsfsdfsdfsd://65bb5fb252189914b5bbe4cf.mockapi.io/api/v1/users";
+                "https://65bb5fb252189914b5bbe4cf.mockapi.io/api/v1/users";
         HttpEntity<Utente> request = new HttpEntity<>(new Utente("Luigi", "Frattamaggiore", "Italia", "f", "2"));
         Utente utente = restTemplate.postForObject(fooResourceUrl, request, Utente.class);
         Assertions.assertNotNull(utente);
