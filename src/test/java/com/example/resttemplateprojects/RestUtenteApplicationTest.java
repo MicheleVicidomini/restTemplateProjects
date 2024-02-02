@@ -14,7 +14,6 @@ public class RestUtenteApplicationTest {
 
     @Test
     void config() {
-
         RestTemplate restTemplate = new RestTemplate(); // abbiamo richiamato l'istanza dell'oggetto RestTemplate
         String fooResourceUrl =
                 "https://65bb5fb252189914b5bbe4cf.mockapi.io/api/v1/users";
