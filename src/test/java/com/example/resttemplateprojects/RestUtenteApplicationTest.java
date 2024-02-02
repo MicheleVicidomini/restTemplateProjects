@@ -13,8 +13,7 @@ import utente.Utente;
 public class RestUtenteApplicationTest {
 
     @Test
-    void configg()
-    {
+    void config() {
 
         RestTemplate restTemplate = new RestTemplate(); // abbiamo richiamato l'istanza dell'oggetto RestTemplate
         String fooResourceUrl =
