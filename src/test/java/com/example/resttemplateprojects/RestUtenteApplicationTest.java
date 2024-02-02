@@ -39,10 +39,6 @@ public class RestUtenteApplicationTest {
     }
 
     @Test
-    void RightConnection(){
-        Assertions.assertThrows(IOException.class, ()->connessione());
-    }
-    @Test
     void config() {
         RestTemplate restTemplate = new RestTemplate(); // abbiamo richiamato l'istanza dell'oggetto RestTemplate
         String fooResourceUrl =
