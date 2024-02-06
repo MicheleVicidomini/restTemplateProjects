@@ -1,4 +1,4 @@
-package inteface;
+package interfacce;
 
 public interface IObjTest {
 

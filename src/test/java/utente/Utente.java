@@ -1,12 +1,11 @@
 package utente;
 
-import inteface.IObjTest;
+import interfacce.IObjTest;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.print.DocFlavor;
 import java.io.Serializable;
 
 @ToString

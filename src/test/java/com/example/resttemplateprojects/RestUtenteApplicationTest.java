@@ -1,25 +1,19 @@
 package com.example.resttemplateprojects;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import inteface.IObjTest;
-import org.apache.http.HttpRequest;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpDelete;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.ws.soap.support.SoapUtils;
-import service.HttpCustomRequest;
+import service.CustomHttp;
 import service.Urls;
-import utente.User;
 import utente.Utente;
 import java.io.IOException;
-import java.net.*;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -27,7 +21,6 @@ import java.net.URLConnection;
 import java.util.Random;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
 
@@ -36,25 +29,29 @@ public class RestUtenteApplicationTest {
 
     @Test
     public void userIsSaved_userIsDeleted_then200IsReceived_thenUserIsReuploadedInTheLastPosition()
-            throws IOException {
-        RestTemplate restTemplate = new RestTemplate();
-        ObjectMapper objMapper = new ObjectMapper();
+            throws JsonProcessingException {
 
         int userId = 111;
-        ResponseEntity<String> response = restTemplate.getForEntity(url + userId, String.class);
-        IObjTest userTmp = objMapper.readValue(response.getBody(), Utente.class);
-        HttpCustomRequest postObj = new HttpCustomRequest(userTmp);
-        restTemplate.delete(url + userId);
-        Assertions.assertEquals(response.getStatusCode(), HttpStatus.OK);
-        System.out.println(userTmp);
-        postObj.postForObject();
+        Utente rsc = CustomHttp.getRsc(url, userId); // ritorna una risorsa presa tranite getEntity all'Url ed iD indicato
+        System.out.println(rsc);
+        CustomHttp.deleteRsc(url, userId);
+        CustomHttp.postRsc(url, rsc);
     }
 
 
-    @Test
-    public void givenUserDoesExists_userIsDeleted_then200IsReceived()
 
-            throws IOException {
+       /* ResponseEntity<String> response = restTemplate.getForEntity(url + userId, String.class);
+        IObjTest userTmp = objMapper.readValue(response.getBody(), Utente.class);
+        HttpCustomRequest postObj = new HttpCustomRequest(userTmp);
+        restTemplate.delete(url + userId);
+
+        System.out.println(userTmp);
+        postObj.postForObject();*/
+
+
+@Test
+public void givenUserDoesExists_userIsDeleted_then200IsReceived()
+        throws IOException {
         Random rand = new Random();
         int id = 21;
         int statusCode = 200;
