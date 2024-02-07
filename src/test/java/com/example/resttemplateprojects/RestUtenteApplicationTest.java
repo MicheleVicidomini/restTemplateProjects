@@ -1,11 +1,11 @@
 package com.example.resttemplateprojects;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +14,6 @@ import service.CustomHttp;
 import service.Urls;
 import utente.Utente;
 import java.io.IOException;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -26,27 +25,28 @@ import static org.hamcrest.Matchers.notNullValue;
 
 public class RestUtenteApplicationTest {
     String url = Urls.fooResoursceUrl;
+@BeforeEach
+    public void setServerDefault(){
+    CustomHttp.deleteAll(url);
+    Utente user =new Utente("Mik","vic","it","none","none");
+    RestTemplate restTemplate = new RestTemplate();
+    restTemplate.postForObject(url,user, Utente.class);
+}
 
     @Test
     public void userIsSaved_userIsDeleted_then200IsReceived_thenUserIsReuploadedInTheLastPosition()
             throws JsonProcessingException {
 
-        int userId = 111;
+        int userId = 113;
         Utente rsc = CustomHttp.getRsc(url, userId); // ritorna una risorsa presa tranite getEntity all'Url ed iD indicato
         System.out.println(rsc);
         CustomHttp.deleteRsc(url, userId);
-        CustomHttp.postRsc(url, rsc);
+        var sts = CustomHttp.postRsc(url, rsc);
+        Assertions.assertEquals(HttpStatus.OK, sts);
     }
 
 
 
-       /* ResponseEntity<String> response = restTemplate.getForEntity(url + userId, String.class);
-        IObjTest userTmp = objMapper.readValue(response.getBody(), Utente.class);
-        HttpCustomRequest postObj = new HttpCustomRequest(userTmp);
-        restTemplate.delete(url + userId);
-
-        System.out.println(userTmp);
-        postObj.postForObject();*/
 
 
 @Test

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import interfacce.IObjTest;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 import utente.Utente;
@@ -19,14 +20,20 @@ public  class CustomHttp implements Serializable,IObjTest{ // Va creato un metod
         Utente user = objmapper.readValue(response.getBody(), Utente.class);
         return user ;
     }
-    public static void postRsc(String url, Utente utente) {
+
+    public static HttpStatusCode postRsc(String url, Utente utente) {
         HttpEntity<Utente> request = new HttpEntity<>(utente);
         restTemplate.postForObject(url, request, Utente.class);
+        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+        return response.getStatusCode();
     }
     public static void deleteRsc(String url, int userId) {
         restTemplate.delete(url+userId);
     }
 
+    public static void deleteAll(String url) {
+        restTemplate.delete(url);
+    }
 
 
 }
