@@ -31,7 +31,7 @@ public  class CustomHttp implements Serializable,IObjTest{ // Va creato un metod
         restTemplate.delete(url+userId);
     }
 
-    public static void deleteAll(String url) {
+    public static void delete(String url) {
         restTemplate.delete(url);
     }
 
